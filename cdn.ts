@@ -24,7 +24,7 @@ export async function getEntry(name: string): Promise<Entry | undefined> {
 }
 
 export async function existsEntry(name: string): Promise<boolean> {
-  const e = await fs.query("SELECT FROM entries WHERE name = ?", [name]);
+  const e = await fs.query("SELECT name FROM entries WHERE name = ?", [name]);
   return typeof e[0] !== "undefined";
 }
 
