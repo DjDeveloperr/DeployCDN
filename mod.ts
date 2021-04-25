@@ -18,7 +18,10 @@ const empty = new Response(null, { status: 204 });
 serve(
   {
     "/": () =>
-      new Response(null, { headers: { Location: "https://owo.w69.wtf/" } }),
+      new Response(null, {
+        status: 302,
+        headers: { Location: "https://owo.w69.wtf/" },
+      }),
     "/api/files": async (req): Promise<any> => {
       if (req.method !== "POST")
         return json({ error: "Method not allowed" }, { status: 400 });
