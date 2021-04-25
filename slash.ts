@@ -5,7 +5,7 @@ import { CDN } from "./wrapper.ts";
 slash.init({ env: true });
 const USERS = ["422957901716652033", "696828906191454221"];
 
-const cdn = new CDN(Deno.env.get("SERVER")!, Deno.env.get("TOKEN")!);
+const cdn = new CDN(Deno.env.get("SERVER")!, Deno.env.get("SERVER_TOKEN")!);
 
 const commands: slash.SlashCommandPartial[] = [
   {
