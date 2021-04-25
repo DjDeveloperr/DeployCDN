@@ -1,4 +1,4 @@
-import * as slash from "https://raw.githubusercontent.com/harmonyland/harmony/main/deploy.ts";
+import * as slash from "https://raw.githubusercontent.com/DjDeveloperr/harmony/refactor/deploy.ts";
 import { EntryType } from "./cdn.ts";
 import { CDN } from "./wrapper.ts";
 
