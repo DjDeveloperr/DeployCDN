@@ -104,11 +104,12 @@ serve(
       } else if (entry.type === EntryType.File) {
         const u = new URL(req.url);
         if (
-          req.headers.get("user-agent") &&
-          ["png", "gif", "apng", "webp", "jpg", "jpeg"].includes(
-            entry.ext?.toLowerCase() ?? ""
-          ) &&
-          u.searchParams.get("image") !== "1"
+          (req.headers.get("user-agent") &&
+            ["png", "gif", "apng", "webp", "jpg", "jpeg"].includes(
+              entry.ext?.toLowerCase() ?? ""
+            ) &&
+            u.searchParams.get("image") !== "1") ||
+          u.searchParams.get("discord") === "1"
         ) {
           const ua = req.headers.get("user-agent")!;
           if (
