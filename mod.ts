@@ -113,7 +113,7 @@ serve(
         ) {
           console.log("Serve Discord UA");
           return new Response(
-            `<!DOCTYPE HTML><html><head><meta property="og:image" content="https://cdn.deno.dev/${name}?image=1"/><meta property="og:type" content="video.other"/></head><body></body></html>`,
+            `<!DOCTYPE HTML><html><head><meta property="og:image" content="https://cdn.deno.dev/${name}?image=1"/><meta property="og:image:type" content="image/${entry.ext}"/></head><body></body></html>`,
             {
               headers: { "content-type": "text/html" },
             }
