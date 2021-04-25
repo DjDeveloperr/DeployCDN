@@ -111,6 +111,7 @@ serve(
             u.searchParams.get("image") !== "1") ||
           u.searchParams.get("discord") === "1"
         ) {
+          console.log("Serve Discord UA");
           const ua = req.headers.get("user-agent")!;
           if (
             ua.includes("+https://discord.com") ||
