@@ -103,27 +103,24 @@ serve(
         });
       } else if (entry.type === EntryType.File) {
         const u = new URL(req.url);
+        const ua = req.headers.get("user-agent")!;
         if (
-          (req.headers.get("user-agent") &&
+          (ua &&
             ["png", "gif", "apng", "webp", "jpg", "jpeg"].includes(
               entry.ext?.toLowerCase() ?? ""
             ) &&
+            (ua.includes("+https://discord.com") ||
+              ua.includes("+https://discordapp.com")) &&
             u.searchParams.get("image") !== "1") ||
           u.searchParams.get("discord") === "1"
         ) {
           console.log("Serve Discord UA");
-          const ua = req.headers.get("user-agent")!;
-          if (
-            ua.includes("+https://discord.com") ||
-            ua.includes("+https://discordapp.com")
-          ) {
-            return new Response(
-              `<!DOCTYPE HTML><html><head><meta property="og:image" content="https://cdn.deno.dev/${name}?image=1"></head><body></body></html>`,
-              {
-                headers: { "content-type": "text/html" },
-              }
-            );
-          }
+          return new Response(
+            `<!DOCTYPE HTML><html><head><meta property="og:image" content="https://cdn.deno.dev/${name}?image=1"></head><body></body></html>`,
+            {
+              headers: { "content-type": "text/html" },
+            }
+          );
         }
         const file = await fs.read(name).catch(() => new Uint8Array(0));
         return new Response(file, {
