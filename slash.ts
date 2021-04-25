@@ -9,7 +9,7 @@ import {
 } from "./cdn.ts";
 import { EntryType } from "./common.ts";
 
-const url = "https://cdn.deno.dev";
+const server = "https://cdn.deno.dev";
 
 slash.init({
   publicKey: Deno.env.get("PUBLIC_KEY")!,
@@ -107,7 +107,7 @@ slash.handle("info", async (d) => {
     embeds: [
       {
         title: "CDN - " + entry.name,
-        url: url + "/" + entry.name,
+        url: server + "/" + entry.name,
         color: 0x43ae7d,
         fields: [
           {
@@ -157,7 +157,7 @@ slash.handle("upload", async (d) => {
   if (exists) return d.editResponse({ content: "Entry already exists." });
   await createFileEntry(name, data);
   d.editResponse({
-    content: `[Successfully uploaded file.](${url}/${name})`,
+    content: `[Successfully uploaded file.](${server}/${name})`,
   });
 });
 
@@ -171,7 +171,7 @@ slash.handle("short", async (d) => {
 
   createURLEntry(name, url)
     .then(() => {
-      d.reply(`[Shortened URL.](${url + "/" + name})`);
+      d.reply(`[Shortened URL.](${server + "/" + name})`);
     })
     .catch((e) => {
       d.reply("Failed to shorten URL:" + e.message);
