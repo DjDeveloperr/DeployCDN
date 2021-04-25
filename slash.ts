@@ -158,8 +158,8 @@ slash.handle("short", (d) => {
     .then(() => {
       d.reply(`[Shortened URL.](${cdn.server + "/" + name})`);
     })
-    .catch(() => {
-      d.reply("Failed to shorten URL. Entry already exists.");
+    .catch((e) => {
+      d.reply("Failed to shorten URL:" + e.message);
     });
 });
 
