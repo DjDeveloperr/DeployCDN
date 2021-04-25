@@ -1,4 +1,5 @@
 import { FSSClient } from "./client.ts";
+import { EntryType } from "./common.ts";
 
 export const fs = new FSSClient(
   Deno.env.get("SERVER")!,
@@ -8,11 +9,6 @@ export const fs = new FSSClient(
 await fs.query(
   "CREATE TABLE IF NOT EXISTS entries (name TEXT PRIMARY KEY, type INTEGER NOT NULL, url TEXT, created TEXT NOT NULL, ext TEXT)"
 );
-
-export enum EntryType {
-  URL,
-  File,
-}
 
 export interface Entry {
   name: string;

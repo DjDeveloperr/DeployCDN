@@ -1,5 +1,5 @@
 import * as slash from "https://raw.githubusercontent.com/DjDeveloperr/harmony/refactor/deploy.ts";
-import { EntryType } from "./cdn.ts";
+import { EntryType } from "./common.ts";
 import { CDN } from "./wrapper.ts";
 
 slash.init({ env: true });
