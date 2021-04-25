@@ -37,7 +37,7 @@ export async function addEntry(
     `INSERT INTO entries(name, type, created${
       urlOrExt ? (type === EntryType.URL ? ", url" : ", ext") : ""
     }) VALUES(?, ?, ?${urlOrExt ? ", ?" : ""})`,
-    [name, type, Date.now().toString(), urlOrExt]
+    [name, type, Date.now().toString(), ...(urlOrExt ? [urlOrExt] : [])]
   );
 }
 

@@ -139,7 +139,7 @@ slash.handle("upload", async (d) => {
       const last = url.split("/").pop();
       if (last) {
         const e = last.split(".").pop();
-        if (e) ext = e.trim();
+        if (e) ext = e.split("?")[0].trim();
       }
     }
   }
