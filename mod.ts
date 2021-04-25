@@ -86,6 +86,7 @@ serve(
       }
     },
     "/:name": async (req, params): Promise<any> => {
+      console.log("get entry, ua:", req.headers.get("user-agent"));
       const name = params.name as string;
       const entry = await getEntry(name);
       if (!entry)
