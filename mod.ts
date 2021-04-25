@@ -106,9 +106,6 @@ serve(
         const ua = req.headers.get("user-agent")!;
         if (
           (ua &&
-            ["png", "gif", "apng", "webp", "jpg", "jpeg"].includes(
-              entry.ext?.toLowerCase() ?? ""
-            ) &&
             (ua.includes("+https://discord.com") ||
               ua.includes("+https://discordapp.com")) &&
             u.searchParams.get("image") !== "1") ||
