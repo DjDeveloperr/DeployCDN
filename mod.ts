@@ -109,9 +109,9 @@ serve(
               entry.ext === undefined
                 ? "application/octet-stream"
                 : ["png", "gif", "apng", "webp", "jpg", "jpeg"].includes(
-                    entry.ext.toLowerCase()
+                    entry.ext?.toLowerCase()
                   )
-                ? `image/${entry.ext}`
+                ? `image/${entry?.ext}`
                 : [
                     "js",
                     "ts",
@@ -131,9 +131,9 @@ serve(
                     "rust",
                     "py",
                     "swift",
-                  ].includes(entry.ext)
-                ? `text/${entry.ext}`
-                : entry.ext,
+                  ].includes(entry?.ext)
+                ? `text/${entry?.ext}`
+                : entry?.ext,
           },
         });
       } else
