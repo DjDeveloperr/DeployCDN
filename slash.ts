@@ -1,11 +1,20 @@
 import * as slash from "https://raw.githubusercontent.com/DjDeveloperr/harmony/refactor/deploy.ts";
+import {
+  createFileEntry,
+  createURLEntry,
+  deleteEntry,
+  existsEntry,
+  fs,
+  getEntry,
+} from "./cdn.ts";
 import { EntryType } from "./common.ts";
-import { CDN } from "./wrapper.ts";
 
-slash.init({ env: true });
+slash.init({
+  publicKey: Deno.env.get("PUBLIC_KEY")!,
+  token: Deno.env.get("BOT_TOKEN")!,
+  path: "/api/interactions",
+});
 const USERS = ["422957901716652033", "696828906191454221"];
-
-const cdn = new CDN(Deno.env.get("SERVER")!, Deno.env.get("SERVER_TOKEN")!);
 
 const commands: slash.SlashCommandPartial[] = [
   {
@@ -90,13 +99,13 @@ function checkUser(d: slash.Interaction) {
 
 slash.handle("info", async (d) => {
   if (!checkUser(d)) return;
-  const entry = await cdn.getEntry(d.option<string>("name"));
+  const entry = await getEntry(d.option<string>("name"));
   if (!entry) return d.reply("Entry not found.");
   d.reply({
     embeds: [
       {
         title: "CDN - " + entry.name,
-        url: cdn.server + "/" + entry.name,
+        url: fs.server + "/" + entry.name,
         color: 0x43ae7d,
         fields: [
           {
@@ -142,21 +151,25 @@ slash.handle("upload", async (d) => {
   if (!res.ok || !data)
     return d.editResponse({ content: "Failed to fetch URL." });
 
-  await cdn.uploadFile(name, data);
+  const exists = await existsEntry(name);
+  if (exists) return d.editResponse({ content: "Entry already exists." });
+  await createFileEntry(name, data);
   d.editResponse({
-    content: `[Successfully uploaded file.](${cdn.server}/${name})`,
+    content: `[Successfully uploaded file.](${fs.server}/${name})`,
   });
 });
 
-slash.handle("short", (d) => {
+slash.handle("short", async (d) => {
   if (!checkUser(d)) return;
   const name = d.option<string>("name");
   const url = d.option<string>("url");
 
-  cdn
-    .shortenURL(name, url)
+  const exists = await existsEntry(name);
+  if (exists) return d.editResponse({ content: "Entry already exists." });
+
+  createURLEntry(name, url)
     .then(() => {
-      d.reply(`[Shortened URL.](${cdn.server + "/" + name})`);
+      d.reply(`[Shortened URL.](${fs.server + "/" + name})`);
     })
     .catch((e) => {
       d.reply("Failed to shorten URL:" + e.message);
@@ -165,8 +178,10 @@ slash.handle("short", (d) => {
 
 slash.handle("delete", (d) => {
   if (!checkUser(d)) return;
-  cdn
-    .deleteEntry(d.option<string>("name"))
+  deleteEntry(d.option<string>("name"))
+    .then((v) => {
+      if (v !== true) throw new Error("");
+    })
     .then(() => {
       d.reply("Deleted entry.");
     })

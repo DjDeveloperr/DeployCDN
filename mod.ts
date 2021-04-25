@@ -3,11 +3,12 @@ import {
   createFileEntry,
   createURLEntry,
   deleteEntry,
-  EntryType,
   existsEntry,
   fs,
   getEntry,
 } from "./cdn.ts";
+import { EntryType } from "./common.ts";
+import "./slash.ts";
 
 const empty = new Response(null, { status: 204 });
 
