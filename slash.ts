@@ -176,4 +176,5 @@ slash.handle("delete", (d) => {
 });
 
 slash.handle("*", (d) => d.reply("Unhandled command.", { ephemeral: true }));
+
 slash.client.on("interactionError", console.log);
