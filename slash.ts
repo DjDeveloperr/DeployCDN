@@ -157,7 +157,7 @@ slash.handle("upload", async (d) => {
   if (exists) return d.editResponse({ content: "Entry already exists." });
   await createFileEntry(name, data);
   d.editResponse({
-    content: `[<Successfully uploaded file.>](${server}/${name})`,
+    content: `[Successfully uploaded file.](<${server}/${name}>)`,
   });
 });
 
